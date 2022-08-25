@@ -5,7 +5,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-import time
+import time, requests
+from bs4 import BeautifulSoup as bs
 
 
 class FlightsCrawler(WebDriver, MongoDB):
@@ -18,13 +19,17 @@ class FlightsCrawler(WebDriver, MongoDB):
 
     def get_flights_list(self):
         self.webdriver()
-        flights = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "flight_board - arrivel_table")))
-        # news = content.find_elements(By.CLASS_NAME, "block-link__overlay-link")
-        # for i in range(0, len(news)):
-        #     self.parse_news(news[i])
-        #     content = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "content")))
-        #     news = content.find_elements(By.CLASS_NAME, "block-link__overlay-link")
-        print(flights)
+        flights_website = requests.get(self.url)
+        soup = bs(flights_website.content, 'html.parser')
+        table = soup.find(id='flight_board-arrivel_table')
+
+        headers = []
+        for i in table.find_all("th"):
+            title = i.text
+            headers.append(title)
+
+
+
         time.sleep(3)
         self.driver.quit()
 
