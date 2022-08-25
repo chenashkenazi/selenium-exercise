@@ -14,6 +14,8 @@ class BBCCrawler(WebDriver):
         self.name = name
         self.url = url
 
+    def get_new_content(self, new):
+        return("blablabla")
 
     def get_new_details(self, new):
         title = new.text
@@ -24,13 +26,26 @@ class BBCCrawler(WebDriver):
             # print(new.page_source.encode("utf-8"))
             full_new = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "root")))
             main = full_new.find_element(By.ID, "main-content")
-            span = main.find_element(By.XPATH, '//*[@id="main-content"]/div[5]/div/div[1]/article/header/p')
-            print(f"full new: {span.text}")
+            author = main.find_element(By.XPATH, '//*[@id="main-content"]/div[5]/div/div[1]/article/header/p')
             self.driver.execute_script("window.history.go(-1)")
+            return title, link, author
         except:
             print("didnt find")
             self.driver.execute_script("window.history.go(-1)")
-            return
+            return None, None, None
+
+    def parse_news(self, new):
+        title, link, author = self.get_new_details(new)
+        content = self.get_new_content(new)
+        if title and link and author and content:
+            record = {
+                "title": title,
+                "link": link,
+                "author": author,
+                "content": content
+            }
+            print(record)
+            # save(record)
 
     def get_news_list(self):
         self.webdriver()
@@ -43,6 +58,7 @@ class BBCCrawler(WebDriver):
 
         time.sleep(3)
         self.driver.quit()
+
 
 
 

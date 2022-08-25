@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+PATH = "C:\Program Files (x86)\chromedriver.exe"
 
 class WebDriver:
 
@@ -17,7 +18,8 @@ class WebDriver:
         options = webdriver.ChromeOptions()
         options.binary_location = self.binary_location
 
-        driver = webdriver.Chrome(executable_path=self.driver_location, chrome_options=options)
+        # driver = webdriver.Chrome(executable_path=self.driver_location, chrome_options=options)
+        driver = webdriver.Chrome(PATH)
         driver.get(self.url)
 
         self.driver = driver
