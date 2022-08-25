@@ -18,8 +18,8 @@ class WebDriver:
         options = webdriver.ChromeOptions()
         options.binary_location = self.binary_location
 
-        # driver = webdriver.Chrome(executable_path=self.driver_location, chrome_options=options)
-        driver = webdriver.Chrome(PATH)
+        driver = webdriver.Chrome(executable_path=self.driver_location, chrome_options=options)
+        # driver = webdriver.Chrome(PATH)
         driver.get(self.url)
 
         self.driver = driver
