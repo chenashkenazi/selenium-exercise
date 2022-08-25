@@ -3,12 +3,12 @@ import pymongo
 
 class MongoDB:
 
-    def __init__(self):
-        client = pymongo.MongoClient(host="0.0.0.0", port=2717)
+    def __init__(self, connection_string):
+        self.client = pymongo.MongoClient(connection_string)
 
     def get_collection(self, collection):
-        db = client["exercise"]
-        return client[collection]
+        db = self.client["exercise"]
+        return db[collection]
 
     def insert(self, collection, record):
         col = self.get_collection(collection)
