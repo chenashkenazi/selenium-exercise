@@ -41,7 +41,6 @@ class BBCCrawler(WebDriver, MongoDB):
                 "link": link,
                 "content": content
             }
-            print(record)
             return record
 
     def get_news_list(self):
@@ -50,7 +49,9 @@ class BBCCrawler(WebDriver, MongoDB):
         content = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "content")))
         news = content.find_elements(By.CLASS_NAME, "block-link__overlay-link")
         for i in range(0, len(news)):
-            list_of_news.append(self.parse_news(news[i]))
+            new_record = self.parse_news(news[i])
+            if new_record:
+                list_of_news.append(new_record)
             content = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "content")))
             news = content.find_elements(By.CLASS_NAME, "block-link__overlay-link")
 
@@ -58,7 +59,14 @@ class BBCCrawler(WebDriver, MongoDB):
         self.driver.quit()
         return list_of_news
 
-    def download_content_and_save(self):
+    def download_content_and_save(self) -> object:
         list_of_news = self.get_news_list()
+        print(list_of_news)
         self.check_db_and_save(list_of_news)
+
+    def search_by_text(self, text):
+        by_title = self.search("bbc", text, "title")
+        by_content = self.search("bbc", text, "content")
+        combined = by_title + by_content
+        return [com['link'] for com in combined] if combined else None
 

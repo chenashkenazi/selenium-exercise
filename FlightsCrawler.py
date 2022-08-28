@@ -77,6 +77,9 @@ class FlightsCrawler(WebDriver, MongoDB):
         flights_list = self.get_flights_list()
         self.check_db_and_save(flights_list)
 
+    def search_by_text(self, text, field_to_search_by):
+        results = self.search("flights", text, field_to_search_by)
+        return [res for res in results] if results else None
 
 
 

@@ -17,8 +17,10 @@ class MongoDB:
     def check_existence(self, collection, field, value):
         col = self.get_collection(collection)
         record = col.find_one({field: value})
+        print(record)
         return True if record else False
 
-    def search(self, collection, text):
+    def search(self, collection, text, field_to_search_by):
         col = self.get_collection(collection)
-        print("I will search!")
+        cursor = col.find({field_to_search_by: {'$regex': text}})
+        return [record for record in cursor] if cursor else []

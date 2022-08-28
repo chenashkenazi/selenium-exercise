@@ -1,6 +1,4 @@
-from selenium import webdriver
-from BBCCrawler import BBCCrawler
-from FlightsCrawler import FlightsCrawler
+from System import System
 
 driver_location = "/usr/bin/chromedriver"
 binary_location = "/usr/bin/google-chrome"
@@ -10,11 +8,6 @@ departures_flights_url = "http://www.iaa.gov.il/he-IL/airports/BenGurion/Pages/O
 arrivals_flights_url = "https://www.iaa.gov.il/airports/ben-gurion/flight-board/?flightType=departures#tab-arrivel_flights1"
 
 if __name__ == "__main__":
-    bbc_crl = BBCCrawler("bbc", bbc_url, driver_location, binary_location)
-    departures_flights_crl = FlightsCrawler("flights", departures_flights_url, driver_location, binary_location)
-    arrivals_flights_crl = FlightsCrawler("flights", arrivals_flights_url, driver_location, binary_location)
-
-    bbc_crl.get_news_list()
-    # departures_flights_crl.get_flights_list()
-    # arrivals_flights_crl.get_flights_list()
+    system = System(bbc_url, driver_location, binary_location, departures_flights_url, arrivals_flights_url)
+    system.consume()
 
