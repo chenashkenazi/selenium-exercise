@@ -1,8 +1,5 @@
 from selenium import webdriver
 
-from selenium.webdriver.chrome.options import Options
-from fake_useragent import UserAgent
-
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 
 

@@ -8,6 +8,7 @@ departures_flights_url = "http://www.iaa.gov.il/he-IL/airports/BenGurion/Pages/O
 arrivals_flights_url = "https://www.iaa.gov.il/airports/ben-gurion/flight-board/?flightType=departures#tab-arrivel_flights1"
 
 if __name__ == "__main__":
+    print("System is starting")
     system = System(bbc_url, driver_location, binary_location, departures_flights_url, arrivals_flights_url)
     system.consume()
 
