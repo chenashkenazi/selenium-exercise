@@ -7,8 +7,10 @@ bbc_url = "https://www.bbc.com/"
 departures_flights_url = "http://www.iaa.gov.il/he-IL/airports/BenGurion/Pages/OnlineFlights.aspx"
 arrivals_flights_url = "https://www.iaa.gov.il/airports/ben-gurion/flight-board/?flightType=departures#tab-arrivel_flights1"
 
+remote_url_chrome = "http://172.25.0.2:4445/wd/hub"
+
 if __name__ == "__main__":
     print("System is starting")
-    system = System(bbc_url, driver_location, binary_location, departures_flights_url, arrivals_flights_url)
+    system = System(bbc_url, remote_url_chrome, binary_location, departures_flights_url, arrivals_flights_url)
     system.consume()
 

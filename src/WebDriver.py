@@ -1,6 +1,7 @@
-from selenium import webdriver
+import time
 
-PATH = "C:\Program Files (x86)\chromedriver.exe"
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 class WebDriver:
@@ -12,21 +13,17 @@ class WebDriver:
         self.driver = None
 
     def webdriver(self):
-        # captcha
-        # options = Options()
-        # ua = UserAgent()
-        # userAgent = ua.random
-        # print(userAgent)
-        # options.add_argument(f'user-agent={userAgent}')
-        # driver = webdriver.Chrome(chrome_options=options,
-        #                           executable_path=PATH)
-        # driver.get(self.url)
-        # self.driver = driver
+        while True:
+            try:
+                print("Creating webdriver in 5 seconds")
+                time.sleep(5)
 
-        options = webdriver.ChromeOptions()
-        options.binary_location = self.binary_location
+                driver = webdriver.Remote('http://127.0.0.1:4444/wd/hub',
+                                          desired_capabilities=DesiredCapabilities.CHROME)
+                driver.get(self.url)
+                self.driver = driver
+                break
+            except:
+                print("Failed. try again!")
 
-        driver = webdriver.Chrome(executable_path=self.driver_location, chrome_options=options)
-        driver.get(self.url)
 
-        self.driver = driver

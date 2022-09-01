@@ -6,7 +6,7 @@ from FlightsCrawler import FlightsCrawler
 
 class System:
     def __init__(self, bbc_url, driver_location, binary_location, departures_flights_url, arrivals_flights_url):
-        self.consumer = KafkaConsumer('exercise', bootstrap_servers='127.0.0.1:29092', api_version=(0,10))
+        self.consumer = KafkaConsumer('exercise', bootstrap_servers='localhost:29092', api_version=(0,10))
         self.bbc_crl = BBCCrawler("bbc", bbc_url, driver_location, binary_location)
         self.departures_flights_crl = FlightsCrawler("flights", departures_flights_url, driver_location, binary_location)
         self.arrivals_flights_crl = FlightsCrawler("flights", arrivals_flights_url, driver_location, binary_location)
@@ -30,11 +30,10 @@ class System:
         print(result)
 
     def consume(self):
-        print("I am consuming")
+        print("Consuming")
         for event in self.consumer:
             message = json.loads(event.value.decode("ascii"))
             self.parse_command(message)
-        print("I am done")
 
 
 
