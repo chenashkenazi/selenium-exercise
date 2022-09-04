@@ -4,7 +4,8 @@ import pymongo
 class MongoDB:
 
     def __init__(self, connection_string):
-        self.client = pymongo.MongoClient(connection_string)
+        # self.client = pymongo.MongoClient(connection_string)
+        self.client = pymongo.MongoClient('172.17.0.2', 27017)
 
     def get_collection(self, collection):
         db = self.client["exercise"]

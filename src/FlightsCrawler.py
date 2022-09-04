@@ -9,7 +9,7 @@ class FlightsCrawler(WebDriver, MongoDB):
 
     def __init__(self, name, url, driver_location, binary_location):
         WebDriver.__init__(self, driver_location, binary_location, url)
-        MongoDB.__init__(self, "mongodb://localhost:27017/")
+        MongoDB.__init__(self, "mongodb://127.0.0.1:27017/")
         self.name = name
 
     def check_db_and_save(self, list_of_flights):
