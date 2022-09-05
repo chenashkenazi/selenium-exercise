@@ -9,7 +9,7 @@ class System:
         self.consumer = KafkaConsumer('exercise', bootstrap_servers='localhost:29092', api_version=(0,10))
         self.bbc_crl = BBCCrawler("bbc", bbc_url, driver_location, binary_location)
         self.departures_flights_crl = FlightsCrawler("flights", departures_flights_url, driver_location, binary_location)
-        # self.arrivals_flights_crl = FlightsCrawler("flights", arrivals_flights_url, driver_location, binary_location)
+        self.arrivals_flights_crl = FlightsCrawler("flights", arrivals_flights_url, driver_location, binary_location)
 
     def parse_command(self, command):
         result = None
@@ -33,6 +33,7 @@ class System:
         print("Consuming")
         for event in self.consumer:
             message = json.loads(event.value.decode("ascii"))
+            print(f"Got mesage: {message}")
             self.parse_command(message)
 
 

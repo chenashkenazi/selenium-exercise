@@ -17,8 +17,11 @@ class FlightsCrawler(WebDriver, MongoDB):
             if not self.check_existence("flights", "flight", flight["flight"]):
                 self.insert("flights", flight)
 
-    def get_flights_list(self):
+    def get_driver(self):
         self.webdriver()
+        print("Webdriver Webdriver is up")
+
+    def get_flights_list(self):
         if "arrivel" in self.driver.current_url:
             tbody_num = 1
         else:
@@ -28,7 +31,7 @@ class FlightsCrawler(WebDriver, MongoDB):
             WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "flight_row")))
             table = self.driver.find_element(By.CLASS_NAME, "tabs-content")
             tbody2 = table.find_elements(By.TAG_NAME, "tbody")
-            self.driver.execute_cdp_cmd('Emulation.setScriptExecutionDisabled', {'value': True})
+            # self.driver.execute_cdp_cmd('Emulation.setScriptExecutionDisabled', {'value': True})
 
             table_rows = tbody2[tbody_num].find_elements(By.CLASS_NAME, "flight_row")
 
@@ -73,9 +76,15 @@ class FlightsCrawler(WebDriver, MongoDB):
         except:
             self.get_flights_list()
 
+    def quit_driver(self):
+        self.driver.quit()
+        print("Driver quit")
+
     def download_content_and_save(self):
+        self.get_driver()
         flights_list = self.get_flights_list()
         print(flights_list)
+        self.quit_driver()
         self.check_db_and_save(flights_list)
 
     def search_by_text(self, text, field_to_search_by):

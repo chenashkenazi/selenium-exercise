@@ -19,6 +19,10 @@ class BBCCrawler(WebDriver, MongoDB):
             if not self.check_existence("bbc", "title", new["title"]):
                 self.insert("bbc", new)
 
+    def get_driver(self):
+        self.webdriver()
+        print("Webdriver is up")
+
     def get_new_details(self, new):
         title = new.text
         link = new.get_attribute('href')
@@ -45,7 +49,6 @@ class BBCCrawler(WebDriver, MongoDB):
 
     def get_news_list(self):
         list_of_news = []
-        self.webdriver()
         content = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "content")))
         news = content.find_elements(By.CLASS_NAME, "block-link__overlay-link")
         for i in range(0, len(news)):
@@ -56,12 +59,17 @@ class BBCCrawler(WebDriver, MongoDB):
             news = content.find_elements(By.CLASS_NAME, "block-link__overlay-link")
 
         time.sleep(3)
-        self.driver.quit()
         return list_of_news
 
+    def quit_driver(self):
+        self.driver.quit()
+        print("Driver quit")
+
     def download_content_and_save(self) -> object:
+        self.get_driver()
         list_of_news = self.get_news_list()
         print(list_of_news)
+        self.quit_driver()
         self.check_db_and_save(list_of_news)
 
     def search_by_text(self, text):
