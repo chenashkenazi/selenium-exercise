@@ -28,5 +28,12 @@ class WebDriver:
                 print("Failed. try again!")
                 attemps += 1
 
+    def get_driver(self):
+        self.webdriver()
+        print("Webdriver is up")
+
+    def quit_driver(self):
+        self.driver.quit()
+        print("Driver quit")
 
 

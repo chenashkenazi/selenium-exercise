@@ -17,10 +17,6 @@ class FlightsCrawler(WebDriver, MongoDB):
             if not self.check_existence("flights", "flight", flight["flight"]):
                 self.insert("flights", flight)
 
-    def get_driver(self):
-        self.webdriver()
-        print("Webdriver Webdriver is up")
-
     def get_flights_list(self):
         if "arrivel" in self.driver.current_url:
             tbody_num = 1
@@ -75,10 +71,6 @@ class FlightsCrawler(WebDriver, MongoDB):
 
         except:
             self.get_flights_list()
-
-    def quit_driver(self):
-        self.driver.quit()
-        print("Driver quit")
 
     def download_content_and_save(self):
         self.get_driver()

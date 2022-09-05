@@ -19,10 +19,6 @@ class BBCCrawler(WebDriver, MongoDB):
             if not self.check_existence("bbc", "title", new["title"]):
                 self.insert("bbc", new)
 
-    def get_driver(self):
-        self.webdriver()
-        print("Webdriver is up")
-
     def get_new_details(self, new):
         title = new.text
         link = new.get_attribute('href')
@@ -60,10 +56,6 @@ class BBCCrawler(WebDriver, MongoDB):
 
         time.sleep(3)
         return list_of_news
-
-    def quit_driver(self):
-        self.driver.quit()
-        print("Driver quit")
 
     def download_content_and_save(self) -> object:
         self.get_driver()
